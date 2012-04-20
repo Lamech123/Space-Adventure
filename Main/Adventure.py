@@ -12,24 +12,14 @@ class ShipGame(Game):
         self.introduction = '''
 Welcome to Ship Adventure. You are the captain of a star ship.
 '''
+        intruder = Event('Intruder', 0.8,'An intruder enters and attacks you', 1)
+        
+        bridge = Place('Bridge',"You are on the bridge of a spaceship, sitting in the captain's chair.", ())
+        readyRoom = Place('Ready Room', "You are in the captain's ready room.", (intruder,))
+        lift = Place('Lift', 'You have entered the turbolift.', ())
+        lounge = Place('Lounge', 'Welcome to the lounge.', ())
 
-        bridge = Place('Bridge',
-            "You are on the bridge of a spaceship, sitting in the captain's chair.",
-            (
-            Event(0.50, 'An intruder beams onto the bridge and shoots you.', -50, maxOccur = 3),
-            Event(0.1, "The ship's doctor gives you a health boost.", 30),
-            ))
-
-        readyRoom = Place('Ready Room', "You are in the captain's ready room.", ())
-
-        lift = Place('Lift', 'You have entered the turbolift.', (
-            Event(.05, "The ship's android says hello to you.", 0),
-        ))
-
-        lounge = Place('Lounge', 'Welcome to the lounge.', (
-            Event(1, 'Relaxing in the lounge improves your health.', 10),
-        ))
-
+        
         bridge.transitions = (readyRoom, lift)
         readyRoom.transitions = (bridge,)
         lift.transitions = (bridge,lounge)
